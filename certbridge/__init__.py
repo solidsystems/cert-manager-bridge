@@ -1,5 +1,6 @@
 import flask
 import waitress
+from pprint import pprint
 
 
 app = flask.Flask('certbridge')
@@ -10,10 +11,11 @@ def healthcheck():
     return 'OK', 200
 
 
-@app.route('/domain')
+@app.route('/domain', methods=['POST', 'GET'])
 def domain():
-    print(flask.headers)
-    print(flask.request)
+    pprint(dict(flask.request.headers))
+    pprint(dict(flask.request.args))
+    pprint(flask.request.get_data())
     return '{}', 400
 
 
