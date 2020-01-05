@@ -16,8 +16,7 @@ def domain():
     pprint(dict(flask.request.headers))
     pprint(dict(flask.request.args))
 
-    host = flask.request.get_json(force=True)
-    host = host['name']
+    host = flask.request.get_data().split(b'=')[1].decode("utf-8")
 
     k8s = f"""
 ---
