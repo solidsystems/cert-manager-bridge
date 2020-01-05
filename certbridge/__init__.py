@@ -15,8 +15,40 @@ def healthcheck():
 def domain():
     pprint(dict(flask.request.headers))
     pprint(dict(flask.request.args))
-    pprint(flask.request.get_data())
-    return '{}', 400
+
+    host = flask.request.get_json(force=True)
+    host = host['name']
+
+    k8s = f"""
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {host}
+  namespace: external-wordpress2
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-prod-http
+    kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: "{host}"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: external-wordpress
+              servicePort: 80
+  tls:
+    - hosts:
+        - "{host}"
+      secretName: {host}-cert
+"""
+
+    with open(f"/mnt/certbridge/{host}.yaml", "w") as fd:
+        fd.write(k8s)
+
+    return '{}', 200
 
 
 waitress.serve(app, listen='*:8080')
