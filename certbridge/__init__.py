@@ -12,7 +12,9 @@ def healthcheck():
 
 @app.route('/domain')
 def domain():
-    return 'UNCONFIGURED', 400
+    print(flask.headers)
+    print(flask.request)
+    return '{}', 400
 
 
 waitress.serve(app, listen='*:8080')
