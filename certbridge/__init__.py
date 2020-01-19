@@ -17,6 +17,8 @@ def domain():
     pprint(dict(flask.request.headers))
     pprint(dict(flask.request.args))
 
+    #https://certbridge.mentormakers.club/domain?path={$serverid}/webapps/{$appid}/{$path}
+
     host = flask.request.get_data().split(b'=')[1].decode("utf-8")
 
     k8s = f"""
@@ -59,7 +61,7 @@ spec:
     do_upload_cmd = f"s3cmd --access_key={SPACES_ACCESS_KEY_ID} --secret_key={SPACES_SECRET_ACCESS_KEY} put '/mnt/certbridge/{host}.yaml' {BUCKET_PATH}"
     os.system(do_upload_cmd)
 
-    return '{}', 200
+    return 'OK', 200
 
 
 waitress.serve(app, listen='*:8080')
