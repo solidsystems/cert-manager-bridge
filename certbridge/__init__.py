@@ -20,11 +20,13 @@ def domain():
 
     #https://certbridge.mentormakers.club/domain?path={$serverid}/webapps/{$appid}/{$path}
 
-    host = flask.request.get_data().split(b'=')[1].decode("utf-8")
+    host = flask.request.get_data().decode("utf-8")
 
     if '=' not in host:
         print(host)
         abort(400)
+
+    host = host.split('=')[1]
 
     k8s = f"""
 ---
