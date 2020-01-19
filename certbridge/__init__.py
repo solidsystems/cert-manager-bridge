@@ -1,5 +1,6 @@
 import flask
 import os
+import subprocess
 import waitress
 from pprint import pprint
 
@@ -51,17 +52,19 @@ spec:
         fd.write(k8s)
 
     # Create the cert for the custom mapped domain
-    kubectl_cmd = f"kubectl apply -f /mnt/certbridge/{host}.yaml"
-    os.system(kubectl_cmd)
+    # kubectl_cmd = f"kubectl apply -f /mnt/certbridge/{host}.yaml"
+    # os.system(kubectl_cmd)
+    subprocess.Popen("kubectl", "apply", "-f", f"/mnt/certbridge/{host}.yaml")
 
     # DO spaces upload
     SPACES_ACCESS_KEY_ID = os.environ.get("SPACES_ACCESS_KEY_ID")
     SPACES_SECRET_ACCESS_KEY = os.environ.get("SPACES_SECRET_ACCESS_KEY")
     BUCKET_PATH = os.environ.get("BUCKET_PATH")
-    do_upload_cmd = f"s3cmd --access_key={SPACES_ACCESS_KEY_ID} --secret_key={SPACES_SECRET_ACCESS_KEY} put '/mnt/certbridge/{host}.yaml' {BUCKET_PATH}"
-    os.system(do_upload_cmd)
+    # do_upload_cmd = f"s3cmd --access_key={SPACES_ACCESS_KEY_ID} --secret_key={SPACES_SECRET_ACCESS_KEY} put '/mnt/certbridge/{host}.yaml' {BUCKET_PATH}"
+    # os.system(do_upload_cmd)
+    subprocess.Popen(["s3cmd", f"--access_key={SPACES_ACCESS_KEY_ID}", f"--secret_key={SPACES_SECRET_ACCESS_KEY}", "put", f"/mnt/certbridge/{host}.yaml", f"{BUCKET_PATH}"])
 
-    return 'OK', 200
+    return '{}', 200
 
 
 waitress.serve(app, listen='*:8080')
