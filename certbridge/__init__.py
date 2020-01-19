@@ -54,7 +54,7 @@ spec:
     # Create the cert for the custom mapped domain
     # kubectl_cmd = f"kubectl apply -f /mnt/certbridge/{host}.yaml"
     # os.system(kubectl_cmd)
-    subprocess.Popen("kubectl", "apply", "-f", f"/mnt/certbridge/{host}.yaml")
+    subprocess.Popen(["kubectl", "apply", "-f", f"/mnt/certbridge/{host}.yaml"])
 
     # DO spaces upload
     SPACES_ACCESS_KEY_ID = os.environ.get("SPACES_ACCESS_KEY_ID")
