@@ -4,7 +4,7 @@ ENV DOCTL_VERSION=1.34.0
 ENV KUBE_VERSION=1.17.0
 
 # Dependencies
-RUN apt-get update && apt-get install -yq curl
+RUN apt-get update && apt-get install -yq curl libmagic-dev
 
 # Install certbridge
 WORKDIR /app
