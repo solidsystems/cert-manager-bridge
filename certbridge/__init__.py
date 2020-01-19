@@ -56,7 +56,7 @@ spec:
     SPACES_ACCESS_KEY_ID = os.environ.get("SPACES_ACCESS_KEY_ID")
     SPACES_SECRET_ACCESS_KEY = os.environ.get("SPACES_SECRET_ACCESS_KEY")
     BUCKET_PATH = os.environ.get("BUCKET_PATH")
-    do_upload_cmd = f"s3cmd --access_key={SPACES_ACCESS_KEY_ID} --secret_key={SPACES_SECRET_ACCESS_KEY} put '/mnt/certbridge/{host}' {BUCKET_PATH}"
+    do_upload_cmd = f"s3cmd --access_key={SPACES_ACCESS_KEY_ID} --secret_key={SPACES_SECRET_ACCESS_KEY} put '/mnt/certbridge/{host}.yaml' {BUCKET_PATH}"
     os.system(do_upload_cmd)
 
     return '{}', 200
