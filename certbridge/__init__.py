@@ -7,6 +7,9 @@ from pprint import pprint
 
 app = flask.Flask('certbridge')
 
+def info(msg):
+    sys.stdout.write(msg + '\n')
+    sys.stdout.flush()
 
 @app.route('/healthcheck')
 def healthcheck():
@@ -15,8 +18,8 @@ def healthcheck():
 
 @app.route('/domain', methods=['POST', 'GET'])
 def domain():
-    pprint(dict(flask.request.headers))
-    pprint(dict(flask.request.args))
+    info(dict(flask.request.headers))
+    info(dict(flask.request.args))
 
     #https://certbridge.mentormakers.club/domain?path={$serverid}/webapps/{$appid}/{$path}&token=abc123
 
@@ -27,13 +30,13 @@ def domain():
         if isinstance(token, list):
             token = token.pop()
         if token != expected:
-            print(f"token equals {token}")
+            info(f"token equals {token}")
             flask.abort(400)
 
     host = flask.request.get_data().decode("utf-8")
 
     if '=' not in host:
-        print(host)
+        info(host)
         flask.abort(400)
 
     host = host.split('=')[1]
@@ -78,5 +81,5 @@ spec:
 
     return '{}', 200
 
-
+info("Starting server process...")
 waitress.serve(app, listen='*:8080')
