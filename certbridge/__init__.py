@@ -18,7 +18,17 @@ def domain():
     pprint(dict(flask.request.headers))
     pprint(dict(flask.request.args))
 
-    #https://certbridge.mentormakers.club/domain?path={$serverid}/webapps/{$appid}/{$path}
+    #https://certbridge.mentormakers.club/domain?path={$serverid}/webapps/{$appid}/{$path}&token=abc123
+
+    expected = os.environ.get("DOMAIN_TOKEN")
+
+    if expected:
+        token = flask.request.args.get("token", None)
+        if isinstance(token, list):
+            token = token.pop()
+        if token != expected:
+            print(f"token equals {token}")
+            flask.abort(400)
 
     host = flask.request.get_data().decode("utf-8")
 
