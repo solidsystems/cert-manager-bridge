@@ -22,6 +22,10 @@ def domain():
 
     host = flask.request.get_data().split(b'=')[1].decode("utf-8")
 
+    if '=' not in host:
+        print(host)
+        abort(400)
+
     k8s = f"""
 ---
 apiVersion: extensions/v1beta1
