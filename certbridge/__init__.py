@@ -24,7 +24,7 @@ def domain():
 
     if '=' not in host:
         print(host)
-        abort(400)
+        flask.abort(400)
 
     host = host.split('=')[1]
 
