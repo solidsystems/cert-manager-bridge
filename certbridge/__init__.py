@@ -21,7 +21,7 @@ def domain():
     info(dict(flask.request.headers))
     info(dict(flask.request.args))
 
-    #https://certbridge.mentormakers.club/domain?path={$serverid}/webapps/{$appid}/{$path}&token=abc123
+    # /domain?path={$serverid}/webapps/{$appid}/{$path}&token=abc123
 
     expected = os.environ.get("DOMAIN_TOKEN")
 
