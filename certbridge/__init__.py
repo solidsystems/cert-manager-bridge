@@ -1,15 +1,15 @@
-import flask
 import os
 import subprocess
 import sys
-import waitress
 from pprint import pprint
 
+import flask
+import waitress
 
 app = flask.Flask('certbridge')
 
 def info(msg):
-    sys.stdout.write(msg + '\n')
+    sys.stdout.write(str(msg) + '\n')
     sys.stdout.flush()
 
 @app.route('/healthcheck')
