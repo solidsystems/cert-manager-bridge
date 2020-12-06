@@ -45,6 +45,7 @@ def domain():
     # Misc ingress variables
     namespace = os.environ.get("ING_SERVICE")
     service = os.environ.get("ING_SERVICE")
+    service_port = os.environ.get("ING_PORT")
 
     k8s = f"""
 ---
@@ -65,7 +66,7 @@ spec:
           - path: /
             backend:
               serviceName: {service}
-              servicePort: 8080
+              servicePort: {service_port}
   tls:
     - hosts:
         - "{host}"
