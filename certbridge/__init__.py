@@ -48,7 +48,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {host}
-  namespace: external-wordpress2
+  namespace: wordpress
   annotations:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     cert-manager.io/cluster-issuer: letsencrypt-prod-http
@@ -60,7 +60,7 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: external-wordpress
+              serviceName: wpmulti-wordpress
               servicePort: 80
   tls:
     - hosts:
