@@ -42,13 +42,17 @@ def domain():
 
     host = host.split('=')[1]
 
+    # Misc ingress variables
+    namespace = os.environ.get("ING_SERVICE")
+    service = os.environ.get("ING_SERVICE")
+
     k8s = f"""
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {host}
-  namespace: wordpress
+  namespace: {namespace}
   annotations:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     cert-manager.io/cluster-issuer: letsencrypt-prod-http
@@ -60,8 +64,8 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: wpmulti-wordpress
-              servicePort: 80
+              serviceName: {service}
+              servicePort: 8080
   tls:
     - hosts:
         - "{host}"
