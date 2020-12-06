@@ -43,7 +43,7 @@ def domain():
     host = host.split('=')[1]
 
     # Misc ingress variables
-    namespace = os.environ.get("ING_SERVICE")
+    namespace = os.environ.get("ING_NAMESPACE")
     service = os.environ.get("ING_SERVICE")
     service_port = os.environ.get("ING_PORT")
 
