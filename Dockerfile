@@ -1,4 +1,4 @@
-FROM python:3.7-slim
+FROM python:3.13.0a2-slim
 
 ENV DOCTL_VERSION=1.34.0
 ENV KUBE_VERSION=1.17.0
